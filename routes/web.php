@@ -21,4 +21,7 @@ Auth::routes();
 
 Route::resource('/houses', HouseController::class);
 
+Route::get('/houses', 'PublicController@index');
+Route::get('/houses/{house}', 'PublicController@show');
+
 Route::get('/home', 'HomeController@index')->name('home');

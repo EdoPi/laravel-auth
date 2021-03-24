@@ -7,6 +7,14 @@ use App\House;
 
 class HouseController extends Controller
 {
+
+
+    public function __construct(){
+
+        $this->middleware('auth');
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,18 +45,28 @@ class HouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request -> all();
+
+
+        $house= new House();
+        $house->fill($data);
+        $house->save();
+
+
+        $newHouse = House::orderBy('id', 'desc')->first();
+        return redirect()->route('houses.show', $newHouse);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $house
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(House $house)
     {
-        //
+        return view('Houses.show', compact('house'));
     }
 
     /**
