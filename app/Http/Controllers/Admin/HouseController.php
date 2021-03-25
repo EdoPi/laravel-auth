@@ -1,19 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\House;
+use App\Http\Controllers\Controller;
+
 
 class HouseController extends Controller
 {
-
-
-    public function __construct(){
-
-        $this->middleware('auth');
-
-    }
 
     /**
      * Display a listing of the resource.
@@ -45,6 +40,21 @@ class HouseController extends Controller
      */
     public function store(Request $request)
     {
+
+       $request->validate([
+
+            'address_prefix' => 'required|max:20',
+            'address' => 'required|max:30',
+            'number' => 'required|numeric',
+            'city' => 'required|max:20',
+            'rooms' => 'required|numeric|between:0,10',
+            'bath' => 'required|numeric|between:0,10',
+            'furniture' => 'max:1000',
+            'price' => 'required|numeric|between:0,10000',
+            'image' => 'required|url',
+
+            ]);
+
         $data = $request -> all();
 
 
@@ -72,24 +82,41 @@ class HouseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $house
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(House $house)
     {
-        //
+        return view('Houses.edit', compact('house'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $house
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, House $house)
     {
-        //
+        $request->validate([
+
+            'address_prefix' => 'required|max:20',
+            'address' => 'required|max:30',
+            'number' => 'required|numeric',
+            'city' => 'required|max:20',
+            'rooms' => 'required|numeric|between:0,10',
+            'bath' => 'required|numeric|between:0,10',
+            'furniture' => 'max:1000',
+            'price' => 'required|numeric|between:0,10000',
+            'image' => 'required|url',
+
+            ]);
+
+        $data = $request -> all();
+        $house -> update($data);
+
+        return redirect()->route('houses.show', compact('house'));
     }
 
     /**

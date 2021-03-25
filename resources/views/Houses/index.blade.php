@@ -14,7 +14,11 @@
         <th scope="col">Arredamento</th>
         <th scope="col">Prezzo</th>
         <th scope="col">Foto</th>
-        <th scope="col"><a class="btn btn-primary" href="/houses/create">ADD NEW ITEM</a></th>
+        <th scope="col">
+            @if (Auth::check())
+            <a class="btn btn-primary" href="/admin/houses/create">ADD NEW ITEM</a>
+            @endif
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -30,7 +34,13 @@
             <td>{{$house->furniture}}</td>
             <td>{{$house->price}}</td>
             <td><img src="{{$house->image}}" style="width: 50px" alt=""></td>
-            <td><a class="btn btn-success" href="houses/{{$house->id}}">Detail</a></td>
+            <td>
+                <a class="btn btn-success" href="houses/{{$house->id}}">Detail</a>
+            @if (Auth::check())
+                <a class="btn btn-primary" href="/admin/houses/{{$house->id}}/edit">EDIT</a>
+                <a class="btn btn-danger" href="/admin/houses/destroy">DELETE</a>
+            @endif
+            </td>
         </tr>
         @endforeach
     </tbody>

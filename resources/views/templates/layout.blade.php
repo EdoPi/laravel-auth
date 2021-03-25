@@ -22,14 +22,27 @@
                   <a class="nav-link" href="/houses">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+                  <a class="nav-link" href="/">Welcome Page</a>
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </form>
-              <a class="btn btn-success" href="">Login</a>
+              @if (!Auth::check())
+                <a class="btn btn-success" href="/login">Login</a>
+              @else
+                <div class="btn btn-danger" aria-labelledby="navbarDropdown">
+                    <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+              @endif
             </div>
           </nav>
     </header>

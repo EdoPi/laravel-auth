@@ -19,9 +19,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('/houses', HouseController::class);
 
-Route::get('/houses', 'PublicController@index');
-Route::get('/houses/{house}', 'PublicController@show');
+
+Route::get('/houses', 'PublicController@index')->name('houses.index');
+Route::get('/houses/{house}', 'PublicController@show')->name('houses.show');
+
+Route::prefix('admin')
+->namespace('Admin')
+->middleware('auth')
+->group(function () {
+    Route::resource('/houses', HouseController::class);
+});
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -2,10 +2,6 @@
 
 @section('content')
 
-@include('templates.formLayout' , [$edit = false])
+@include('templates.formLayout', [$edit = true])
 
 @endsection
-
-
-
-
